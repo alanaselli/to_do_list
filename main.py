@@ -6,35 +6,32 @@
 # ## Goal:
 # To create an easy to use tool to organize daily, weekly, and monthly activities
 
-# ### Problems to solve:
-# - Run functions from the command line
-# - Pass a date as input to a function
-# - Take date and turn it into the name of a list
-
-# In[2]:
-
-
+# Import modules
 import pandas as pd
 import numpy as np
 import sys
+import os.path
+import simplejson as json
 from collections import defaultdict
 
+# Verify if date_taks exist
+# if os.path.exists('date_taks.json'): # True or False
+#file = open('date_tasks.json', 'r+') # Open file if exists, create if doesn't exist
+#old_json = json.load(file)
 
-# In[3]:
+date_tasks = defaultdict(list)
+#date_tasks.update(old_json)
 
-
-date_taks = defaultdict(list)
+#date_tasks = json.load(file)
 
 def add_one_time_task(day, task):
-    date_taks[day].append(task)
-    print(date_taks[day])
+    date_tasks[day].append(task)
+    print(date_tasks[day])
+    with open("date_tasks.json", "w") as outfile:
+        json.dump(date_tasks, outfile)
 
-
-# In[ ]:
-
-
+# Run from terminal
 if sys.argv[1] in ['TASK','Task','task']:
     day = sys.argv[2]
     task = sys.argv[3]
     add_one_time_task(day, task)
-
