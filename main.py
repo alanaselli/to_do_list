@@ -14,15 +14,19 @@ import os.path
 import simplejson as json
 from collections import defaultdict
 
+
 # Verify if date_taks exist
 # if os.path.exists('date_taks.json'): # True or False
-#file = open('date_tasks.json', 'r+') # Open file if exists, create if doesn't exist
-#old_json = json.load(file)
+json_path = 'date_tasks.json'
+if os.path.exists(json_path):
+    with open('date_tasks.json', 'r') as f:
+        old_json = json.loads(f.read()) # Open file if exists, create if doesn't exist
+        # TODO: how to transform dict -> defaultdict.
+        old_json = defaultdict(list, old_json)
+        # IMPORTANT: this is how one opens up a debugger: `import pdb; pdb.set_trace()`.
+else:
+    old_json = defaultdict(list)
 
-date_tasks = defaultdict(list)
-#date_tasks.update(old_json)
-
-#date_tasks = json.load(file)
 
 def add_one_time_task(day, task):
     date_tasks[day].append(task)
