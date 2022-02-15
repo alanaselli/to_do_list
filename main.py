@@ -4,7 +4,7 @@
 # # To-do-list Project
 # 
 # ## Goal:
-# To create an easy to use tool to organize daily, weekly, and monthly activities
+# To create a tool to organize daily, weekly, and monthly activities
 
 # Import modules
 import pandas as pd
@@ -20,12 +20,12 @@ from collections import defaultdict
 json_path = 'date_tasks.json'
 if os.path.exists(json_path):
     with open('date_tasks.json', 'r') as f:
-        old_json = json.loads(f.read()) # Open file if exists, create if doesn't exist
+        date_tasks = json.loads(f.read())
         # TODO: how to transform dict -> defaultdict.
-        old_json = defaultdict(list, old_json)
+        date_tasks = defaultdict(list, date_tasks)
         # IMPORTANT: this is how one opens up a debugger: `import pdb; pdb.set_trace()`.
 else:
-    old_json = defaultdict(list)
+    date_tasks = defaultdict(list)
 
 
 def add_one_time_task(day, task):
