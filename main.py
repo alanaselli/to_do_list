@@ -13,7 +13,9 @@ import sys
 import os.path
 import simplejson as json
 from collections import defaultdict
+import typer
 
+app = typer.Typer()
 
 # Verify if date_taks exist
 # if os.path.exists('date_taks.json'): # True or False
@@ -27,15 +29,16 @@ if os.path.exists(json_path):
 else:
     date_tasks = defaultdict(list)
 
-
+@app.command()
 def add_one_time_task(day, task):
     date_tasks[day].append(task)
     print(date_tasks[day])
     with open("date_tasks.json", "w") as outfile:
         json.dump(date_tasks, outfile)
 
-# Run from terminal
-if sys.argv[1] in ['TASK','Task','task']:
-    day = sys.argv[2]
-    task = sys.argv[3]
-    add_one_time_task(day, task)
+@app.command()
+def show_taks(day):
+    print(date_tasks[day])
+
+if __name__ == '__main__':
+    app()
