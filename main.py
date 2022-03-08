@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# # To-do-list Project
-# 
-# ## Goal:
+# To-do-list Project
+
+# Goal:
 # To create a tool to organize daily, weekly, and monthly activities
 
 # Import modules
@@ -18,12 +18,10 @@ import typer
 app = typer.Typer()
 
 # Verify if date_taks exist
-# if os.path.exists('date_taks.json'): # True or False
 json_path = 'date_tasks.json'
 if os.path.exists(json_path):
     with open('date_tasks.json', 'r') as f:
         date_tasks = json.loads(f.read())
-        # TODO: how to transform dict -> defaultdict.
         date_tasks = defaultdict(list, date_tasks)
         # IMPORTANT: this is how one opens up a debugger: `import pdb; pdb.set_trace()`.
 else:
