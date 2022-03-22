@@ -14,10 +14,11 @@ import os.path
 import simplejson as json
 from collections import defaultdict
 import typer
+from datetime import date
 
 app = typer.Typer()
 
-# Verify if date_taks exist
+# Verify if date_tasks exist
 json_path = 'date_tasks.json'
 if os.path.exists(json_path):
     with open('date_tasks.json', 'r') as f:
@@ -30,13 +31,19 @@ else:
 @app.command()
 def add_one_time_task(day, task):
     date_tasks[day].append(task)
-    print(date_tasks[day])
     with open("date_tasks.json", "w") as outfile:
         json.dump(date_tasks, outfile)
 
 @app.command()
-def show_taks(day):
-    print(date_tasks[day])
+def add_weekly_task(day_of_the_week, task):
+    date_tasks[day_of_the_week].append(task)
+    with open("date_tasks.json", "w") as outfile:
+        json.dump(date_tasks, outfile)
+
+@app.command()
+def show_tasks(day):
+    
+#    print(date_tasks[day])
 
 if __name__ == '__main__':
     app()
