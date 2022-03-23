@@ -6,6 +6,9 @@
 # Goal:
 # To create a tool to organize daily, weekly, and monthly activities
 
+# Dates on iso format: 'YYYY-MM-DD'
+# Names of the week: Monday, Tuesday…
+
 # Import modules
 import pandas as pd
 import numpy as np
@@ -42,8 +45,23 @@ def add_weekly_task(day_of_the_week, task):
 
 @app.command()
 def show_tasks(day):
-    
-#    print(date_tasks[day])
+    list_of_the_day = date_tasks[day]
+    isoday = date.fromisoformat(day)
+    if isoday.weekday() == 0:
+        list_of_the_day.extend(date_tasks['Monday'])
+    if isoday.weekday() == 1:
+        list_of_the_day.extend(date_tasks['Tuesday'])
+    if isoday.weekday() == 2:
+        list_of_the_day.extend(date_tasks['Wednesday'])
+    if isoday.weekday() == 3:
+        list_of_the_day.extend(date_tasks['Thursday'])
+    if isoday.weekday() == 4:
+        list_of_the_day.extend(date_tasks['Friday'])
+    if isoday.weekday() == 5:
+        list_of_the_day.extend(date_tasks['Saturday'])
+    if isoday.weekday() == 6:
+        list_of_the_day.extend(date_tasks['Sunday'])
+    print(list_of_the_day)
 
 if __name__ == '__main__':
     app()
