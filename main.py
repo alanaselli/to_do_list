@@ -14,12 +14,17 @@ import pandas as pd
 import numpy as np
 import sys
 import os.path
+import argparse
 import simplejson as json
 from collections import defaultdict
-import typer
+#import typer
 from datetime import date
 
-app = typer.Typer()
+#app = typer.Typer()
+parser = argparse.ArgumentParser(description='Create To-do Lists')
+parser.add_argument('--d','--day', type=date, metavar='', required=True, help='a date for a task')
+parser.add_argument('--t','--task', type=str, metavar='', required=True, help='a task to perform')
+args = parser.parse_args()
 
 # Verify if date_tasks exist
 json_path = 'date_tasks.json'
@@ -31,19 +36,19 @@ if os.path.exists(json_path):
 else:
     date_tasks = defaultdict(list)
 
-@app.command()
+#@app.command()
 def add_one_time_task(day, task):
     date_tasks[day].append(task)
     with open("date_tasks.json", "w") as outfile:
         json.dump(date_tasks, outfile)
 
-@app.command()
+#@app.command()
 def add_weekly_task(day_of_the_week, task):
     date_tasks[day_of_the_week].append(task)
     with open("date_tasks.json", "w") as outfile:
         json.dump(date_tasks, outfile)
 
-@app.command()
+#@app.command()
 def show_tasks(day):
     list_of_the_day = date_tasks[day]
     isoday = date.fromisoformat(day)
@@ -64,4 +69,4 @@ def show_tasks(day):
     print(list_of_the_day)
 
 if __name__ == '__main__':
-    app()
+    list_of_the_day = show_tasks(args.day)
