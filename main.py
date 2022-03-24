@@ -21,10 +21,6 @@ from collections import defaultdict
 from datetime import date
 
 #app = typer.Typer()
-parser = argparse.ArgumentParser(description='Create To-do Lists')
-parser.add_argument('--d','--day', type=date, metavar='', required=True, help='a date for a task')
-parser.add_argument('--t','--task', type=str, metavar='', required=True, help='a task to perform')
-args = parser.parse_args()
 
 # Verify if date_tasks exist
 json_path = 'date_tasks.json'
@@ -37,16 +33,27 @@ else:
     date_tasks = defaultdict(list)
 
 #@app.command()
-def add_one_time_task(day, task):
-    date_tasks[day].append(task)
+def add_one_time_task(order):
+    date_tasks[order.DATE].append(order.TASK)
     with open("date_tasks.json", "w") as outfile:
         json.dump(date_tasks, outfile)
+    print(date_tasks[order.DATE])
 
 #@app.command()
 def add_weekly_task(day_of_the_week, task):
     date_tasks[day_of_the_week].append(task)
     with open("date_tasks.json", "w") as outfile:
         json.dump(date_tasks, outfile)
+
+days_of_the_week = {
+    "m": "Monday",
+    "t": "Tuesday",
+    "w": "Wednesday",
+    "th": "Thursday",
+    "f": "Friday",
+    "s": "Saturday",
+    "su": "Sunday"
+}
 
 #@app.command()
 def show_tasks(day):
@@ -69,4 +76,25 @@ def show_tasks(day):
     print(list_of_the_day)
 
 if __name__ == '__main__':
-    list_of_the_day = show_tasks(args.day)
+    parser = argparse.ArgumentParser(description='Create To-do Lists')
+    parser.add_argument(
+        'TASK', 
+        type=str, 
+        help='a task to perform'
+    )
+    parser.add_argument(
+        '--d','--date', 
+        type=str, 
+        help='a date for a task',
+        dest='DATE',
+    )
+    parser.add_argument(
+        '--wd','--week_day', 
+        type=str, 
+        choices=days_of_the_week.values(),
+        nargs="*",
+        dest='week_day',
+        help='a day of the week'
+    )
+    args = parser.parse_args()
+    add_one_time_task(args)
