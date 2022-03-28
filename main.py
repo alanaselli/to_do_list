@@ -41,36 +41,22 @@ def main(a):
 #         json.dump(date_tasks, outfile)
 
 days_of_the_week = {
-    "m": "Monday",
-    "t": "Tuesday",
-    "w": "Wednesday",
-    "th": "Thursday",
-    "f": "Friday",
-    "s": "Saturday",
-    "su": "Sunday"
+    0: "Monday",
+    1: "Tuesday",
+    2: "Wednesday",
+    3: "Thursday",
+    4: "Friday",
+    5: "Saturday",
+    6: "Sunday"
 }
 
 def show_tasks(a):
-    print(date_tasks[a.DATE])
-
-# def show_tasks(day):
-#     list_of_the_day = date_tasks[day]
-#     isoday = date.fromisoformat(day)
-#     if isoday.weekday() == 0:
-#         list_of_the_day.extend(date_tasks['Monday'])
-#     if isoday.weekday() == 1:
-#         list_of_the_day.extend(date_tasks['Tuesday'])
-#     if isoday.weekday() == 2:
-#         list_of_the_day.extend(date_tasks['Wednesday'])
-#     if isoday.weekday() == 3:
-#         list_of_the_day.extend(date_tasks['Thursday'])
-#     if isoday.weekday() == 4:
-#         list_of_the_day.extend(date_tasks['Friday'])
-#     if isoday.weekday() == 5:
-#         list_of_the_day.extend(date_tasks['Saturday'])
-#     if isoday.weekday() == 6:
-#         list_of_the_day.extend(date_tasks['Sunday'])
-#     print(list_of_the_day)
+    list_of_the_day = date_tasks[a.DATE]
+    isoday = date.fromisoformat(a.DATE)
+    for n in range(7):
+        if isoday.weekday() == n:
+            list_of_the_day.extend(date_tasks[days_of_the_week[n]])
+    print(list_of_the_day)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Create To-do Lists')
@@ -80,7 +66,7 @@ if __name__ == '__main__':
         help='a date for a task'
     )
     parser.add_argument(
-        'TASK', 
+        '-TASK','-t', 
         type=str,
         help='a task to perform'
     )
@@ -96,4 +82,7 @@ if __name__ == '__main__':
     # fun_group.add_argument('--foo', action='store_true')
 
     args = parser.parse_args()
-    main(args)
+    if args.TASK is None:
+        show_tasks(args)
+    else:
+        main(args)
