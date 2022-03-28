@@ -7,7 +7,4 @@ The program generates a list of tasks for a given day.
 - Check finished tasks;
 - Delete tasks.
 ## To do
-- Add argument to output a list for the day without inputing a task
-- Add flag for recurring tasks
-- How to create recurring tasks
 - Fix date standardization
