@@ -30,10 +30,10 @@ else:
     date_tasks = defaultdict(list)
 
 def main(a):
-    date_tasks[a.DATE].append(a.t)
+    date_tasks[a.DATE.isoformat()].append(a.t)
     with open("date_tasks.json", "w") as outfile:
         json.dump(date_tasks, outfile)
-    print(a.t + " added to " + a.DATE + " list!")
+    print(a.t + " added to " + a.DATE.isoformat() + " list!")
 
 days_of_the_week = {
     0: "Monday",
@@ -46,16 +46,16 @@ days_of_the_week = {
 }
 
 def show_tasks(a):
-    list_of_the_day = date_tasks[a.DATE]
-    isoday = date.fromisoformat(a.DATE)
+    list_of_the_day = date_tasks[a.DATE.isoformat()]
     for n in range(7):
-        if isoday.weekday() == n:
+        if a.DATE.weekday() == n:
             list_of_the_day.extend(date_tasks[days_of_the_week[n]])
     print(list_of_the_day)
 
 def add_weekly_task(a):
     for i in a.wd:
         date_tasks[i].append(a.t)
+        print(a.t + " added to " + i + " list!")
     with open("date_tasks.json", "w") as outfile:
         json.dump(date_tasks, outfile)
 
@@ -63,7 +63,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Create To-do Lists')
     parser.add_argument(
         'DATE', 
-        type=str, 
+        type=date.fromisoformat, 
         help='a date for a task'
     )
     parser.add_argument(
@@ -78,8 +78,6 @@ if __name__ == '__main__':
         nargs="*",
         help='a day of the week'
     )
-    # fun_group = parser.add_mutually_exclusive_group()
-    # fun_group.add_argument('--foo', action='store_true')
 
     args = parser.parse_args()
     if args.t is None:

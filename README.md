@@ -7,4 +7,4 @@ The program generates a list of tasks for a given day.
 - Check finished tasks;
 - Delete tasks.
 ## To do
-- Fix date standardization
+- Add delete function
