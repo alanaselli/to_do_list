@@ -59,6 +59,31 @@ def add_weekly_task(a):
     with open("date_tasks.json", "w") as outfile:
         json.dump(date_tasks, outfile)
 
+def remove_task(a):
+    date_tasks[a.DATE.isoformat()].remove(a.t)
+    with open("date_tasks.json", "w") as outfile:
+        json.dump(date_tasks, outfile)
+    print(a.t + " removed from " + a.DATE.isoformat() + " list!")
+
+def remove_weekly_task(a):
+    for i in a.wd:
+        date_tasks[i].remove(a.t)
+        print(a.t + " removed from " + i + " list!")
+    with open("date_tasks.json", "w") as outfile:
+        json.dump(date_tasks, outfile)
+
+def remove_day_tasks(a):
+    del date_tasks[a.DATE.isoformat()]
+    with open("date_tasks.json", "w") as outfile:
+        json.dump(date_tasks, outfile)
+    print("All tasks removed from "+a.DATE.isoformat()+" list!")
+
+def empty_all(a):
+    date_tasks.clear()
+    with open("date_tasks.json", "w") as outfile:
+        json.dump(date_tasks, outfile)
+    print("All tasks were deleted.")
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Create To-do Lists')
     parser.add_argument(
@@ -76,13 +101,24 @@ if __name__ == '__main__':
         type=str, 
         choices=days_of_the_week.values(),
         nargs="*",
-        help='a day of the week'
+        help='one or more days of the week'
+    )
+    parser.add_argument(
+        '-r',
+        action='store_true',
+        help='remove a task'
     )
 
     args = parser.parse_args()
     if args.t is None:
         show_tasks(args)
+    elif args.r == True:
+        if args.wd is None:
+            remove_task(args)
+        else:
+            remove_weekly_task(args)
     elif args.wd is not None:
         add_weekly_task(args)
     else:
         main(args)
+    # print(args)
