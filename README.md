@@ -7,3 +7,4 @@ The program generates a list of tasks for a given day.
 - Check finished tasks;
 - Delete tasks.
 ## To do
+- Automate test_routine
