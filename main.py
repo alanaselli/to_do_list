@@ -10,6 +10,7 @@
 # Names of the week: Monday, Tuesday…
 
 # Import modules
+from re import A
 import pandas as pd
 import numpy as np
 import sys
@@ -30,10 +31,10 @@ else:
     date_tasks = defaultdict(list)
 
 def main(a):
-    date_tasks[a.DATE.isoformat()].append(a.t)
+    date_tasks[a.d.isoformat()].append(a.t)
     with open("date_tasks.json", "w") as outfile:
         json.dump(date_tasks, outfile)
-    print(a.t + " added to " + a.DATE.isoformat() + " list!")
+    print(a.t + " added to " + a.d.isoformat() + " list!")
 
 days_of_the_week = {
     0: "Monday",
@@ -46,9 +47,9 @@ days_of_the_week = {
 }
 
 def show_tasks(a):
-    list_of_the_day = date_tasks[a.DATE.isoformat()]
+    list_of_the_day = date_tasks[a.d.isoformat()]
     for n in range(7):
-        if a.DATE.weekday() == n:
+        if a.d.weekday() == n:
             list_of_the_day.extend(date_tasks[days_of_the_week[n]])
     print(list_of_the_day)
 
@@ -60,10 +61,10 @@ def add_weekly_task(a):
         json.dump(date_tasks, outfile)
 
 def remove_task(a):
-    date_tasks[a.DATE.isoformat()].remove(a.t)
+    date_tasks[a.d.isoformat()].remove(a.t)
     with open("date_tasks.json", "w") as outfile:
         json.dump(date_tasks, outfile)
-    print(a.t + " removed from " + a.DATE.isoformat() + " list!")
+    print(a.t + " removed from " + a.d.isoformat() + " list!")
 
 def remove_weekly_task(a):
     for i in a.wd:
@@ -73,12 +74,12 @@ def remove_weekly_task(a):
         json.dump(date_tasks, outfile)
 
 def remove_day_tasks(a):
-    del date_tasks[a.DATE.isoformat()]
+    del date_tasks[a.d.isoformat()]
     with open("date_tasks.json", "w") as outfile:
         json.dump(date_tasks, outfile)
-    print("All tasks removed from "+a.DATE.isoformat()+" list!")
+    print("All tasks removed from "+a.d.isoformat()+" list!")
 
-def empty_all(a):
+def empty_all():
     date_tasks.clear()
     with open("date_tasks.json", "w") as outfile:
         json.dump(date_tasks, outfile)
@@ -87,7 +88,7 @@ def empty_all(a):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Create To-do Lists')
     parser.add_argument(
-        'DATE', 
+        '-d', 
         type=date.fromisoformat, 
         help='a date for a task'
     )
@@ -108,17 +109,40 @@ if __name__ == '__main__':
         action='store_true',
         help='remove a task'
     )
+    parser.add_argument(
+        '-empty',
+        action='store_true',
+        help='empty all lists'
+    )
 
     args = parser.parse_args()
-    if args.t is None:
-        show_tasks(args)
-    elif args.r == True:
-        if args.wd is None:
+    if args.empty:
+        empty_all()
+    elif args.r:
+        if args.wd:
+            remove_weekly_task(args)
+        elif args.t:
             remove_task(args)
         else:
-            remove_weekly_task(args)
-    elif args.wd is not None:
+            remove_day_tasks(args)
+    elif args.wd:
         add_weekly_task(args)
-    else:
+    elif args.t:
         main(args)
+    else:
+        show_tasks(args)
+
+    # if args.t is None:
+    #     show_tasks(args)
+    # elif args.r == True:
+    #     if args.t is None:
+    #         remove_day_tasks(args)
+    #     if args.wd is None:
+    #         remove_task(args)
+    #     else:
+    #         remove_weekly_task(args)
+    # elif args.wd is not None:
+    #     add_weekly_task(args)
+    # else:
+    #     main(args)
     # print(args)
