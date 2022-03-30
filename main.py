@@ -10,10 +10,6 @@
 # Names of the week: Monday, Tuesday…
 
 # Import modules
-from re import A
-import pandas as pd
-import numpy as np
-import sys
 import os.path
 import argparse
 import simplejson as json
@@ -30,12 +26,6 @@ if os.path.exists(json_path):
 else:
     date_tasks = defaultdict(list)
 
-def main(a):
-    date_tasks[a.d.isoformat()].append(a.t)
-    with open("date_tasks.json", "w") as outfile:
-        json.dump(date_tasks, outfile)
-    print(a.t + " added to " + a.d.isoformat() + " list!")
-
 days_of_the_week = {
     0: "Monday",
     1: "Tuesday",
@@ -45,6 +35,12 @@ days_of_the_week = {
     5: "Saturday",
     6: "Sunday"
 }
+
+def main(a):
+    date_tasks[a.d.isoformat()].append(a.t)
+    with open("date_tasks.json", "w") as outfile:
+        json.dump(date_tasks, outfile)
+    print(a.t + " added to " + a.d.isoformat() + " list!")
 
 def show_tasks(a):
     list_of_the_day = date_tasks[a.d.isoformat()]
@@ -131,18 +127,3 @@ if __name__ == '__main__':
         main(args)
     else:
         show_tasks(args)
-
-    # if args.t is None:
-    #     show_tasks(args)
-    # elif args.r == True:
-    #     if args.t is None:
-    #         remove_day_tasks(args)
-    #     if args.wd is None:
-    #         remove_task(args)
-    #     else:
-    #         remove_weekly_task(args)
-    # elif args.wd is not None:
-    #     add_weekly_task(args)
-    # else:
-    #     main(args)
-    # print(args)
