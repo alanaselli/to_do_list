@@ -11,5 +11,6 @@ The program generates a list of tasks for a given day.
 - add checked tasks to show_tasks
 - rearange argparse arguments
 - make -r and -c mutually exclusive
+- add warning in empty all
 - add comments to my code!
 - allow for user to choose the name of the saving file - and thus multiple users using the program
