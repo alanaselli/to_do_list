@@ -7,3 +7,9 @@ The program generates a list of tasks for a given day.
 - Check finished tasks;
 - Delete tasks.
 ## To do
+- allow for multiple tasks in check_task
+- add checked tasks to show_tasks
+- rearange argparse arguments
+- make -r and -c mutually exclusive
+- add comments to my code!
+- allow for user to choose the name of the saving file - and thus multiple users using the program
