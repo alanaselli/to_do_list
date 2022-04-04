@@ -51,7 +51,11 @@ def show_tasks(a):
         if a.d.weekday() == n:
             list_of_the_day.extend(date_tasks[days_of_the_week[n]])
     for i in range(len(list_of_the_day)):
-        print("- " + list_of_the_day[i])
+            print("- " + list_of_the_day[i])
+    for v in date_tasks[a.d.isoformat() + '_c']:
+            print("\033[09m {}\033[00m" .format(v))
+    if len(list_of_the_day) == 0:
+        print("Your list is empty!")
 
 def add_weekly_task(a):
     for i in a.wd:
@@ -83,7 +87,8 @@ def empty_all():
 def check_task(a):
     item_name = a.d.isoformat() + '_c'
     date_tasks[item_name].append(a.t)
-    date_tasks[a.d.isoformat()].remove(a.t)
+    if a.t in date_tasks[a.d.isoformat()]:
+        date_tasks[a.d.isoformat()].remove(a.t)
     save_file()
     print(a.t + " checked from " + a.d.isoformat() + " list!")
 

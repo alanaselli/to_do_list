@@ -8,7 +8,6 @@ The program generates a list of tasks for a given day.
 - Delete tasks.
 ## To do
 - allow for multiple tasks in check_task
-- add checked tasks to show_tasks
 - rearange argparse arguments
 - make -r and -c mutually exclusive
 - add warning in empty all
