@@ -60,19 +60,25 @@ def show_tasks(a):
 
 def add_weekly_task(a):
     for i in a.wd:
-        date_tasks[i].append(a.t)
-        print(a.t + " added to " + i + " list!")
+        for t in a.t:
+            date_tasks[i].append(t)
+        print(t + " added to " + i + " list!")
     save_file()
 
 def remove_task(a):
-    date_tasks[a.d.isoformat()].remove(a.t)
+    for i in a.t:
+        try:
+            date_tasks[a.d.isoformat()].remove(i)
+        except:
+            date_tasks[a.d.isoformat() + '_c'].remove(i)
+    print(i + " removed from " + a.d.isoformat() + " list!")
     save_file()
-    print(a.t + " removed from " + a.d.isoformat() + " list!")
 
 def remove_weekly_task(a):
     for i in a.wd:
-        date_tasks[i].remove(a.t)
-        print(a.t + " removed from " + i + " list!")
+        for t in a.t:
+            date_tasks[i].remove(t)
+        print(t + " removed from " + i + " list!")
     save_file()
 
 def remove_day_tasks(a):
@@ -114,20 +120,21 @@ if __name__ == '__main__':
         nargs="*",
         help='one or more days of the week'
     )
-    parser.add_argument(
+    group = parser.add_mutually_exclusive_group()
+    group.add_argument(
         '-r',
         action='store_true',
         help='remove a task'
+    )
+    group.add_argument(
+        '-c',
+        action='store_true',
+        help='check tasks'
     )
     parser.add_argument(
         '-empty',
         action='store_true',
         help='empty all lists'
-    )
-    parser.add_argument(
-        '-c',
-        action='store_true',
-        help='check tasks'
     )
 
     args = parser.parse_args()
