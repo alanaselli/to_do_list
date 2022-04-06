@@ -41,9 +41,10 @@ def save_file():
         json.dump(date_tasks, outfile)
 
 def main(a):
-    date_tasks[a.d.isoformat()].append(a.t)
+    for i in a.t:
+        date_tasks[a.d.isoformat()].append(i)
+        print(i + " added to " + a.d.isoformat() + " list!")
     save_file()
-    print(a.t + " added to " + a.d.isoformat() + " list!")
 
 def show_tasks(a):
     list_of_the_day = date_tasks[a.d.isoformat()]
@@ -86,11 +87,12 @@ def empty_all():
 
 def check_task(a):
     item_name = a.d.isoformat() + '_c'
-    date_tasks[item_name].append(a.t)
-    if a.t in date_tasks[a.d.isoformat()]:
-        date_tasks[a.d.isoformat()].remove(a.t)
+    for i in a.t:
+        date_tasks[item_name].append(i)
+        if i in date_tasks[a.d.isoformat()]:
+            date_tasks[a.d.isoformat()].remove(i)
+        print(i + " checked from " + a.d.isoformat() + " list!")
     save_file()
-    print(a.t + " checked from " + a.d.isoformat() + " list!")
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Create To-do Lists')
@@ -102,7 +104,8 @@ if __name__ == '__main__':
     parser.add_argument(
         '-t', 
         type=str,
-        help='a task to perform'
+        help='a task to perform',
+        nargs='*'
     )
     parser.add_argument(
         '-wd', 
