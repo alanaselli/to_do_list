@@ -87,9 +87,22 @@ def remove_day_tasks(a):
     print("All tasks removed from "+a.d.isoformat()+" list!")
 
 def empty_all():
-    date_tasks.clear()
-    save_file()
-    print("All tasks were deleted.")
+    print("WARNING! This will delete all your lists!")
+    yesChoice = ['yes', 'y']
+    noChoice = ['no', 'n']
+
+    user_answer = input("Do you wish to continue? [y/n] ").lower()
+
+    if user_answer in yesChoice:
+        date_tasks.clear()
+        save_file()
+        print("All tasks were deleted.")
+    elif user_answer in noChoice:
+        print("Exiting the program.")
+        exit(0)
+    else: 
+        print("Invalid input.\nAborting program.")
+        exit(1)
 
 def check_task(a):
     item_name = a.d.isoformat() + '_c'

@@ -7,7 +7,6 @@ The program generates a list of tasks for a given day.
 - Check finished tasks;
 - Delete tasks.
 ## To do
-- add warning in empty all
 - add comments to my code!
 - allow for user to choose the name of the saving file - and thus multiple users using the program
 - read about global variables
