@@ -7,6 +7,7 @@ The program generates a list of tasks for a given day.
 - Check finished tasks;
 - Delete tasks.
 ## To do
+- Fix passing arguments to open and save functions
 - allow for user to choose the name of the saving file - and thus multiple users using the program
 - read about global variables
 - don't put effectfull code on top level (what are side effects)
