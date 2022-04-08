@@ -19,7 +19,7 @@ else:
     exit(1)
 
 print("\nEmptying lists")
-empty_test = os.system("python3.8 main.py -empty")
+empty_test = os.system("python3.8 main.py -empty -q")
 print("Empting list ran with exit code %d" % empty_test)
 
 list_of_tests = [
@@ -46,5 +46,5 @@ else:
         print("\nTest_"+ str(k) + " ran with exit code " + v)
 
 print("\nEmptying all lists…")
-os.system("python3.8 main.py -empty")
+os.system("python3.8 main.py -empty -q")
 print("\nTest routine completed!\n")
