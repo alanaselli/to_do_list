@@ -9,7 +9,6 @@ The program generates a list of tasks for a given day.
 ## To do
 - read about global variables
 - don't put effectfull code on top level (what are side effects)
-- write bash to test commands (black box testing)
 - write test with unittest
 - use return instead of print
 
