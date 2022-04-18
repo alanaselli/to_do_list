@@ -23,14 +23,16 @@ empty_test = os.system("python3.8 main.py -empty -q")
 print("Empting list ran with exit code %d" % empty_test)
 
 list_of_tests = [
-    "python3.8 main.py -d 2022-03-29 -t this_is_a_task",
-    "python3.8 main.py -d 2022-03-29",
-    "python3.8 main.py -t every_tue_fri -wd Tuesday Friday",
-    "python3.8 main.py -d 2022-03-29",
-    "python3.8 main.py -d 2022-04-01",
-    "python3.8 main.py -t every_tue_fri -wd Tuesday Friday -r",
-    "python3.8 main.py -d 2022-03-29 -t this_is_a_task -r",
-    "python3.8 main.py -d 2022-03-29 -r"
+    "python3.8 main.py -f test -d 2022-03-29 -t this_is_a_task",
+    "python3.8 main.py -f test -d 2022-03-29",
+    "python3.8 main.py -f test -d 2022-03-29 -t this_is_a_task -c",
+    "python3.8 main.py -f test -d 2022-03-29",
+    "python3.8 main.py -f test -t every_tue_fri -wd Tuesday Friday",
+    "python3.8 main.py -f test -d 2022-03-29",
+    "python3.8 main.py -f test -d 2022-04-01",
+    "python3.8 main.py -f test -t every_tue_fri -wd Tuesday Friday -r",
+    "python3.8 main.py -f test -d 2022-03-29 -t this_is_a_task -r",
+    "python3.8 main.py -f test -d 2022-03-29 -r"
 ]
 
 list_of_errors = {}
